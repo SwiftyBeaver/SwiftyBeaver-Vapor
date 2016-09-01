@@ -13,7 +13,7 @@ dependencies: [
 ],
 ```
 
-## Installation
+## Setup
 
 ```swift
 import Vapor
