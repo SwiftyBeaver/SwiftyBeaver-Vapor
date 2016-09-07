@@ -15,8 +15,13 @@ app.get("/") { request in
     log.info("a nice information")
     log.warning("oh no, that won’t be good")
     log.error("ouch, an error did occur!")
-    return "Hello, World!"
     
+    return "welcome!"
+}
+
+// 404
+app.get("*") { request in
+    return "the 404 page"
 }
 
 let port = app.config["app", "port"]?.int ?? 80
