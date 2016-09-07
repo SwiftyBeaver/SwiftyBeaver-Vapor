@@ -1,15 +1,22 @@
+//
+//  main.swift
+//  SwiftyBeaverVaporExample
+//
+//  Created by Sebastian Kreutzberger on 9/7/16.
+//  Copyright © 2016 Sebastian Kreutzberger
+//  Some rights reserved: http://opensource.org/licenses/MIT
+//
+
 import Vapor
 import HTTP
+import SwiftyBeaverVapor
 
-//let app = Droplet()
-//app.config["app", "key"]?.string ?? ""
-
-let app = Droplet(providers: [Provider.self])
+let app = Droplet(providers: [SwiftyBeaverProvider.self])
 let log = app.log.self // to avoid writing app.log all the time
 
 // home route
 app.get("/") { request in
-
+    
     log.verbose("not so important")
     log.debug("something to debug")
     log.info("a nice information")

@@ -1,6 +1,6 @@
 //
-//  Provider.swift
-//  VaporSwiftyBeaver
+//  SwiftyBeaverProvider.swift
+//  SwiftyBeaverVapor
 //
 //  Created by Sebastian Kreutzberger on 9/1/16.
 //  Copyright © 2016 Sebastian Kreutzberger
@@ -8,14 +8,13 @@
 //
 
 import Vapor
-import SwiftyBeaver
 
-public final class Provider: Vapor.Provider {
+public final class SwiftyBeaverProvider: Vapor.Provider {
     
     public let provided: Providable
     
     public init(config: Config) throws {
-        let log = VaporSwiftyBeaver(config: config)
+        let log = SwiftyBeaverVapor(config: config)
         provided = Providable(log: log)
     }
     

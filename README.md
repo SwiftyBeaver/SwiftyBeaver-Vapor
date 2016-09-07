@@ -17,14 +17,31 @@ dependencies: [
 
 ```swift
 import Vapor
-import VaporSwiftyBeaver
+import SwiftyBeaverVapor
 
-let drop = Droplet(providers: [VaporSwiftyBeaver.SwiftyBeaverProvider.self])
+let app = Droplet(providers: [SwiftyBeaverProvider.self])
+let log = app.log.self // to avoid writing app.log all the time
 ```
 
 ## Use
 
+```swift
+app.get("/") { request in
+
+    log.verbose("not so important")
+    log.debug("something to debug")
+    log.info("a nice information")
+    log.warning("oh no, that won’t be good")
+    log.error("ouch, an error did occur!")
+
+    return "welcome!"
+}
+
+```
+
+The `main.swift` in the included Example folder contains more details.
+
 
 ## License
 
-VaporSwiftyBeaver released under the [MIT License](https://github.com/SwiftyBeaver/SwiftyBeaver-Vapor/blob/master/LICENSE).
+SwiftyBeaverVapor released under the [MIT License](https://github.com/SwiftyBeaver/SwiftyBeaver-Vapor/blob/master/LICENSE).

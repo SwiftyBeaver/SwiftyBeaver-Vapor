@@ -1,4 +1,4 @@
-Packages
-.build
-xcuserdata
-*.xcodeproj
+.DS_Store
+/.build
+/Packages
+/*.xcodeproj

@@ -1,6 +1,6 @@
 //
-//  VaporSwiftyBeaver.swift
-//  VaporSwiftyBeaver
+//  SwiftyBeaverVapor.swift
+//  SwiftyBeaverVapor
 //
 //  Created by Sebastian Kreutzberger on 9/1/16.
 //  Copyright © 2016 Sebastian Kreutzberger
@@ -11,7 +11,7 @@ import Foundation
 import Vapor
 import SwiftyBeaver
 
-public final class VaporSwiftyBeaver: Log {
+public final class SwiftyBeaverVapor: Log {
     
     public var enabled: [LogLevel]
     private var sb = SwiftyBeaver.self
