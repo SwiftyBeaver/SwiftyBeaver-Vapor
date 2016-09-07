@@ -19,7 +19,7 @@ dependencies: [
 import Vapor
 import VaporSwiftyBeaver
 
-let drop = Droplet(providers: [VaporSwiftyBeaver.Provider.self])
+let drop = Droplet(providers: [VaporSwiftyBeaver.SwiftyBeaverProvider.self])
 ```
 
 ## Use
