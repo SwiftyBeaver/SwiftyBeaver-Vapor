@@ -8,7 +8,7 @@ Add this to the `Package.swift` of your Vapor project:
 
 ```swift
 dependencies: [
-	.Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver-Vapor.git"),
+	.Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver-Vapor.git", majorVersion: 0, minor: 0),
 	//...other packages here
 ],
 ```
