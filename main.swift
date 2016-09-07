@@ -4,7 +4,7 @@ import HTTP
 //let app = Droplet()
 //app.config["app", "key"]?.string ?? ""
 
-let app = Droplet(providers: [SwiftyBeaverProvider.self])
+let app = Droplet(providers: [Provider.self])
 let log = app.log.self // to avoid writing app.log all the time
 
 // home route

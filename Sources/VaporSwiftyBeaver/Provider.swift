@@ -10,7 +10,7 @@
 import Vapor
 import SwiftyBeaver
 
-public final class SwiftyBeaverProvider: Vapor.Provider {
+public final class Provider: Vapor.Provider {
     
     public let provided: Providable
     
