@@ -28,8 +28,8 @@ app.get("/") { request in
 
 // 404
 app.get("*") { request in
+    log.warning("called non-existing page \(request.uri)")
     return "the 404 page"
 }
 
-let port = app.config["app", "port"]?.int ?? 80
-app.serve()
+app.run()

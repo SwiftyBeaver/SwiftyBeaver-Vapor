@@ -10,6 +10,14 @@
 import Vapor
 
 public final class SwiftyBeaverProvider: Vapor.Provider {
+    /**
+     Called before the Droplet begins serving
+     which is @noreturn.
+     */
+    public func beforeRun(_: Droplet) {
+        //print("before run of SwiftyBeaverProvider")
+    }
+
     
     public let provided: Providable
     
