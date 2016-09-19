@@ -8,8 +8,10 @@
 //
 
 import Vapor
+import SwiftyBeaver
 
 public final class SwiftyBeaverProvider: Vapor.Provider {
+    
     /**
      Called before the Droplet begins serving
      which is @noreturn.
@@ -21,10 +23,18 @@ public final class SwiftyBeaverProvider: Vapor.Provider {
     
     public let provided: Providable
     
+    /// do not use
     public init(config: Config) throws {
         let log = SwiftyBeaverVapor(config: config)
         provided = Providable(log: log)
     }
+    
+    /// add an array of SwiftyBeaver destination instances
+    public init(destinations: [BaseDestination]) {
+        let log = SwiftyBeaverVapor(destinations: destinations)
+        provided = Providable(log: log)
+    }
+    
     
     public func afterInit(_ drop: Droplet) {
     }

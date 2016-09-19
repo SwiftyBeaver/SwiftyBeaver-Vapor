@@ -16,14 +16,15 @@ public final class SwiftyBeaverVapor: Log {
     public var enabled: [LogLevel]
     private var sb = SwiftyBeaver.self
     
+    /// do not use
     public init(config: Config) {
-        let console = ConsoleDestination()  // log to Xcode Console
-        
-        let file = FileDestination()  // log to default swiftybeaver.log file
-        file.logFileURL = URL(string: "file:///tmp/VaporLogs.log")!
-        sb.addDestination(console)
-        sb.addDestination(file)
-        
+        enabled = LogLevel.all
+    }
+    
+    public init(destinations: [BaseDestination]) {
+        for destination in destinations {
+            sb.addDestination(destination)
+        }
         enabled = LogLevel.all
     }
     

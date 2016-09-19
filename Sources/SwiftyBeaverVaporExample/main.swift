@@ -10,8 +10,17 @@
 import Vapor
 import HTTP
 import SwiftyBeaverVapor
+import SwiftyBeaver
+import Foundation
 
-let app = Droplet(providers: [SwiftyBeaverProvider.self])
+// set-up SwiftyBeaver Logging
+let console = ConsoleDestination()  // log to Xcode Console
+let file = FileDestination()  // log to default swiftybeaver.log file
+file.logFileURL = URL(string: "file:///tmp/VaporLogs.log")!
+let sbProvider = SwiftyBeaverProvider(destinations: [console, file])
+
+// create Droplet
+let app = Droplet(initializedProviders: [sbProvider])
 let log = app.log.self // to avoid writing app.log all the time
 
 // home route
