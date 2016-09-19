@@ -1,6 +1,7 @@
 # SwiftyBeaver Provider for Vapor
+[![Language Swift 3](https://img.shields.io/badge/Language-Swift%203-orange.svg)](https://swift.org) [![Vapor 1.x](https://img.shields.io/badge/Vapor-1.x-blue.svg)](http://vapor.codes/) [![SwiftyBeaver 1.x](https://img.shields.io/badge/SwiftyBeaver-1.x-blue.svg)] (https://github.com/SwiftyBeaver/SwiftyBeaver) [![Slack Status](https://slack.swiftybeaver.com/badge.svg)](https://slack.swiftybeaver.com) 
 
-Adds logging support to the [Vapor](https://github.com/vapor/vapor) web framework for server-side Swift 3 on Linux and Mac.
+Adds logging support to the [Vapor Web Framework](https://github.com/vapor/vapor)  for server-side Swift 3 on Linux and Mac.
 
 ## Installation
 
