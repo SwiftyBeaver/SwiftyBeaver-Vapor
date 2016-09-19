@@ -7,16 +7,18 @@
 //  Some rights reserved: http://opensource.org/licenses/MIT
 //
 
+import Foundation
 import Vapor
-import HTTP
 import SwiftyBeaverVapor
 import SwiftyBeaver
-import Foundation
 
-// set-up SwiftyBeaver Logging
-let console = ConsoleDestination()  // log to Xcode Console
-let file = FileDestination()  // log to default swiftybeaver.log file
-file.logFileURL = URL(string: "file:///tmp/VaporLogs.log")!
+// set-up SwiftyBeaver logging destinations (console, file, cloud, ...)
+// see http://docs.swiftybeaver.com/category/8-logging-destinations to learn more
+let console = ConsoleDestination()  // log to Xcode Console in color
+let file = FileDestination()  // log to file
+file.logFileURL = URL(string: "file:///tmp/VaporLogs.log")! // set log file
+
+// add SwiftyBeaver destination instances to SwiftyBeaver Logging Provider
 let sbProvider = SwiftyBeaverProvider(destinations: [console, file])
 
 // create Droplet
