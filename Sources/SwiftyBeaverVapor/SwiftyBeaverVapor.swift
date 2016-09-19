@@ -18,68 +18,40 @@ public final class SwiftyBeaverVapor: Log {
     
     public init(config: Config) {
         let console = ConsoleDestination()  // log to Xcode Console
-        console.detailOutput = false
         
         let file = FileDestination()  // log to default swiftybeaver.log file
-        file.detailOutput = false
-        
-        //file.logFileURL = URL(string: "~/Desktop/VaporSwiftyBeaver.log") // later: adjust via config
+        file.logFileURL = URL(string: "file:///tmp/VaporLogs.log")!
         sb.addDestination(console)
         sb.addDestination(file)
         
         enabled = LogLevel.all
     }
     
-    // limited logging until the pull request is approved
-    public func log(_ level: LogLevel, message: String) {
+    // can be used once the pull request which changes the logging interface is merged in Vapor
+    public func log(_ level: LogLevel, message: String, file: String = #file, function: String = #function, line: Int = #line) {
+    
         if enabled.contains(level) {
             
-            var sbLevel: SwiftyBeaver.Level = .Error
+            var sbLevel: SwiftyBeaver.Level = .error
             
             // match the protocol logging levels with the ones of SwiftyBeaver
             switch level {
             case .verbose:
-                sbLevel = .Verbose
+                sbLevel = .verbose
             case .debug:
-                sbLevel = .Debug
+                sbLevel = .debug
             case .info:
-                sbLevel = .Info
+                sbLevel = .info
             case .warning:
-                sbLevel = .Warning
+                sbLevel = .warning
             default:
                 // for error and fatal
-                sbLevel = .Error
+                sbLevel = .error
             }
             
             // log to SwiftyBeaver
-            sb.custom(level: sbLevel, message: message, path: "", function: "", line: 0)
-            
-        }
-
-    }
-    
-    /*
-    // can be used once the pull request which changes the logging interface is merged in Vapor
-    public func log(_ level: LogLevel, message: String, path: String = #file, function: String = #function, line: Int = #line) {
-    
-        if enabled.contains(level) {
-            
-            // match the protocol logging levels with the ones of SwiftyBeaver
-            switch level {
-            case .verbose:
-                sb.verbose("verbose message '\(message)' from \(path), function \(function), line \(line)")
-            case .debug:
-                sb.debug("debug message '\(message)' from \(path), function \(function), line \(line)")
-            case .info:
-                sb.info(message)
-            case .warning:
-                sb.debug(message)
-            default:
-                // for error and fatal
-                sb.error(message)
-            }
+            sb.custom(level: sbLevel, message: message, file: file, function: function, line: line)
         }
     }
-     */
 
 }
