@@ -37,10 +37,11 @@ app.get("/") { request in
     return "welcome!"
 }
 
+/*
 // 404
 app.get("*") { request in
     log.warning("called non-existing page \(request.uri)")
     return "the 404 page"
-}
+}*/
 
 app.run()
