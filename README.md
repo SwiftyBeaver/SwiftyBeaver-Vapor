@@ -1,7 +1,7 @@
-# SwiftyBeaver Provider for Vapor
+# SwiftyBeaver Logging Provider for Vapor
 [![Language Swift 3](https://img.shields.io/badge/Language-Swift%203-orange.svg)](https://swift.org) [![Vapor 1.x](https://img.shields.io/badge/Vapor-1.x-blue.svg)](http://vapor.codes/) [![SwiftyBeaver 1.x](https://img.shields.io/badge/SwiftyBeaver-1.x-blue.svg)] (https://github.com/SwiftyBeaver/SwiftyBeaver) [![Slack Status](https://slack.swiftybeaver.com/badge.svg)](https://slack.swiftybeaver.com) 
 
-Adds logging support to the [Vapor Web Framework](https://github.com/vapor/vapor)  for server-side Swift 3 on Linux and Mac.
+Adds the powerful logging of [SwiftyBeaver](https://github.com/SwiftyBeaver/SwiftyBeaver) to [Vapor](https://github.com/vapor/vapor) for server-side Swift 3 on Linux and Mac.
 
 ## Installation
 
@@ -34,6 +34,8 @@ let sbProvider = SwiftyBeaverProvider(destinations: [console, file])
 let app = Droplet(initializedProviders: [sbProvider])
 let log = app.log.self // to avoid writing app.log all the time
 ```
+
+Add the SwiftyBeaver [logging destinations](http://docs.swiftybeaver.com/category/8-logging-destinations) you want to use, optionally adjust their defaults like format, color, filter or minimum log level and you are ready to log 🙌
 <br/>
 
 ## Use
