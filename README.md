@@ -27,12 +27,15 @@ import SwiftyBeaver
 // learn more at http://bit.ly/2ci4mMX
 let console = ConsoleDestination()  // log to Xcode Console in color
 let file = FileDestination()  // log to file in color
-file.logFileURL = URL(string: "file:///tmp/VaporLogs.log")! // set log file
+file.logFileURL = URL(fileURLWithPath: "/tmp/VaporLogs.log") // set log file
 let sbProvider = SwiftyBeaverProvider(destinations: [console, file])
 
-// create Droplet
-let app = Droplet(initializedProviders: [sbProvider])
-let log = app.log.self // to avoid writing app.log all the time
+// create Droplet & add provider
+let app = Droplet()
+app.addProvider(sbProvider)
+
+// shortcut to avoid writing app.log all the time
+let log = app.log.self
 ```
 
 Add the SwiftyBeaver [logging destinations](http://docs.swiftybeaver.com/category/8-logging-destinations) you want to use, optionally adjust their defaults like format, color, filter or minimum log level and you are ready to log 🙌

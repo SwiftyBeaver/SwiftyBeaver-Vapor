@@ -11,32 +11,34 @@ import Vapor
 import SwiftyBeaver
 
 public final class SwiftyBeaverProvider: Vapor.Provider {
-    
-    /**
-     Called before the Droplet begins serving
-     which is @noreturn.
-     */
-    public func beforeRun(_: Droplet) {
-        //print("before run of SwiftyBeaverProvider")
-    }
 
+    private let logProtocol: LogProtocol
     
-    public let provided: Providable
+    // is automatically called after adding of provider to droplet
+    // sets SwiftyBeaverVapor as new logging protocol for the droplet
+    public func boot(_ drop: Droplet) {
+        drop.log = logProtocol
+    }
     
-    /// do not use
+    /// do not use, it is just required by protocol
     public init(config: Config) throws {
-        let log = SwiftyBeaverVapor(config: config)
-        provided = Providable(log: log)
+        logProtocol = SwiftyBeaverVapor(config: config)
     }
     
     /// add an array of SwiftyBeaver destination instances
     public init(destinations: [BaseDestination]) {
-        let log = SwiftyBeaverVapor(destinations: destinations)
-        provided = Providable(log: log)
+        logProtocol = SwiftyBeaverVapor(destinations: destinations)
     }
     
     
+    // is automatically called directly after boot()
     public func afterInit(_ drop: Droplet) {
+        print("afterInit")
+
+    }
+
+    // is automatically called directly after afterInit()
+    public func beforeRun(_: Droplet) {
     }
     
     public func beforeServe(_: Droplet) {

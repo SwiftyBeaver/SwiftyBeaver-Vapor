@@ -16,13 +16,15 @@ import SwiftyBeaver
 // see http://docs.swiftybeaver.com/category/8-logging-destinations to learn more
 let console = ConsoleDestination()  // log to Xcode Console in color
 let file = FileDestination()  // log to file
-file.logFileURL = URL(string: "file:///tmp/VaporLogs.log")! // set log file
+file.logFileURL = URL(fileURLWithPath: "/tmp/VaporLogs.log") // set log file
 
 // add SwiftyBeaver destination instances to SwiftyBeaver Logging Provider
 let sbProvider = SwiftyBeaverProvider(destinations: [console, file])
 
 // create Droplet
-let app = Droplet(initializedProviders: [sbProvider])
+let app = Droplet()
+app.addProvider(sbProvider)
+
 let log = app.log.self // to avoid writing app.log all the time
 
 // home route
@@ -36,12 +38,5 @@ app.get("/") { request in
     
     return "welcome!"
 }
-
-/*
-// 404
-app.get("*") { request in
-    log.warning("called non-existing page \(request.uri)")
-    return "the 404 page"
-}*/
 
 app.run()

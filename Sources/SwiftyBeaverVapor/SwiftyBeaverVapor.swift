@@ -11,7 +11,7 @@ import Foundation
 import Vapor
 import SwiftyBeaver
 
-public final class SwiftyBeaverVapor: Log {
+public final class SwiftyBeaverVapor: LogProtocol {
     
     public var enabled: [LogLevel]
     private var sb = SwiftyBeaver.self
