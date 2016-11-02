@@ -33,8 +33,6 @@ public final class SwiftyBeaverProvider: Vapor.Provider {
     
     // is automatically called directly after boot()
     public func afterInit(_ drop: Droplet) {
-        print("afterInit")
-
     }
 
     // is automatically called directly after afterInit()
