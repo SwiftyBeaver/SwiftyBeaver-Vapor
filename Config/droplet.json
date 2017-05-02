@@ -1,13 +1,22 @@
 {
-    "middleware.server": [
-        "file",
-        "abort",
-        "validation",
-        "type-safe",
+    "server": "engine",
+    
+    "client": "engine",
+    
+    "console": "terminal",
+    
+    "log": "swiftybeaver",
+    
+    "hash": "crypto",
+    
+    "cipher": "crypto",
+    
+    "middleware": [
+        "error",
         "date",
-        "sessions"
-        ],
-    "client": [
-        
-        ]
+        "file"
+    ],
+    
+    "commands": [
+    ]
 }
