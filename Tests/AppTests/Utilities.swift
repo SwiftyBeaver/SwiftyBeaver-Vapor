@@ -1,3 +1,13 @@
+//
+//  Utilities.swift
+//  SwiftyBeaverProvider
+//
+//  Created by Gustavo Perdomo on 5/2/17.
+//  Copyright © 2016 Sebastian Kreutzberger. Some rights reserved.
+//
+
+// swiftlint:disable force_try
+
 import Foundation
 @testable import App
 @testable import Vapor

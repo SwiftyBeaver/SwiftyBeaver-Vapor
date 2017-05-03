@@ -1,3 +1,13 @@
+//
+//  RouteTests.swift
+//  SwiftyBeaverProvider
+//
+//  Created by Gustavo Perdomo on 5/2/17.
+//  Copyright © 2016 Sebastian Kreutzberger. Some rights reserved.
+//
+
+// swiftlint:disable force_try
+
 import XCTest
 import Foundation
 import Testing
@@ -10,7 +20,7 @@ import HTTP
 
 class RouteTests: TestCase {
     let drop = try! Droplet.testable()
-    
+
     func testRoot() throws {
         try drop
             .testResponse(to: .get, at: "/")

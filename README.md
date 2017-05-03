@@ -1,63 +1,128 @@
+<p align="center">
+    <a href="http://vapor.codes">
+        <img src="https://img.shields.io/badge/Vapor-2.x-blue.svg" alt="Vapor">
+    </a>
+    <a href="https://github.com/SwiftyBeaver/SwiftyBeaver">
+        <img src="https://img.shields.io/badge/SwiftyBeaver-1.x-blue.svg" alt="SwiftyBeaver">
+    </a>
+    <!--a href="https://slack.swiftybeaver.com">
+        <img src="https://slack.swiftybeaver.com/badge.svg" alt="Slack Team">
+    </a-->
+    <a href="LICENSE">
+        <img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT License">
+    </a>
+    <!--a href="https://circleci.com/gh/SwiftyBeaver/SwiftyBeaver-Vapor">
+        <img src="https://circleci.com/gh/SwiftyBeaver/SwiftyBeaver-Vapor.svg?style=shield" alt="Continuous Integration">
+    </a>
+    <a href="https://travis-ci.org/SwiftyBeaver/SwiftyBeaver-Vapor">
+    	<img src="https://travis-ci.org/SwiftyBeaver/SwiftyBeaver-Vapor.svg?branch=master" alt="Build Status">
+    </a-->
+    <a href="https://swift.org">
+        <img src="http://img.shields.io/badge/swift-3.1-brightgreen.svg" alt="Swift 3.1">
+    </a>
+</center>
+
 # SwiftyBeaver Logging Provider for Vapor
-[![Language Swift 3](https://img.shields.io/badge/Language-Swift%203-orange.svg)](https://swift.org) [![Vapor 1.x](https://img.shields.io/badge/Vapor-1.x-blue.svg)](http://vapor.codes/) [![SwiftyBeaver 1.x](https://img.shields.io/badge/SwiftyBeaver-1.x-blue.svg)] (https://github.com/SwiftyBeaver/SwiftyBeaver) [![Slack Status](https://slack.swiftybeaver.com/badge.svg)](https://slack.swiftybeaver.com) 
 
 Adds the powerful logging of [SwiftyBeaver](https://github.com/SwiftyBeaver/SwiftyBeaver) to [Vapor](https://github.com/vapor/vapor) for server-side Swift 3 on Linux and Mac.
 
 ## Installation
 
-Add this to the `Package.swift` of your Vapor project:
+Add this project to the `Package.swift` of your Vapor project:
 
 ```swift
-dependencies: [
-	.Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver-Vapor.git", majorVersion: 1),
-	//...other packages here
-],
+import PackageDescription
+
+let package = Package(
+    name: "Project",
+    dependencies: [
+        .Package(url: "https://github.com/vapor/vapor.git", majorVersion: 2),
+        .Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver-Vapor.git", majorVersion: 2),
+    ],
+    exclude: [ ... ]
+)
 ```
-<br/>
 
 ## Setup
 
+After you've added the SwiftyBeaver Provider package to your project, setting the provider up in code is easy.
+
+### Add to Droplet
+
+First, register the SwiftyBeaverProvider.Provider with your Droplet.
+
 ```swift
-import Foundation
 import Vapor
-import SwiftyBeaverVapor
-import SwiftyBeaver
+import SwiftyBeaverProvider
 
-// set-up SwiftyBeaver logging destinations (console, file, cloud, ...)
-// learn more at http://bit.ly/2ci4mMX
-let console = ConsoleDestination()  // log to Xcode Console in color
-let file = FileDestination()  // log to file in color
-file.logFileURL = URL(fileURLWithPath: "/tmp/VaporLogs.log") // set log file
-let sbProvider = SwiftyBeaverProvider(destinations: [console, file])
+let drop = try Droplet()
 
-// create Droplet & add provider
-let app = Droplet()
-app.addProvider(sbProvider)
+try drop.addProvider(SwiftyBeaverProvider.Provider.self)
 
-// shortcut to avoid writing app.log all the time
-let log = app.log.self
+````
+
+### Configure Droplet
+
+Once the provider is added to your Droplet, you can configure it to use the SwiftyBeaver logger. Otherwise you still use the old console logger.
+
+Config/droplet.json
+
+```json
+{
+    "log": "swiftybeaver",
+}
 ```
 
-Add the SwiftyBeaver [logging destinations](http://docs.swiftybeaver.com/category/8-logging-destinations) you want to use, optionally adjust their defaults like format, color, filter or minimum log level and you are ready to log 🙌
-<br/>
+### Configure Destinations
+
+If you run your application now, you will likely see an error that the SwiftyBeaver configuration file is missing. Let's add that now
+
+#### Basic
+
+Here is an example of a simple SwiftyBeaver configuration file to configure console destination.
+
+Config/swiftybeaver.json
+
+```json
+{
+    "console": true
+}
+```
+
+Here is an example of a SwiftyBeaver configuration file to add all possible destinations.
+
+```json
+{
+    "console": true,
+    "file": "path/to/log/file",
+    "platform": {
+        "appId": "YOUR_APP_ID",
+        "appSecret": "YOUR_APP_SECRET",
+        "encryptionKey": "YOUR_ENCRYPTION_KEY"
+    }
+}
+```
+
+> Note:
+It's a good idea to store the SwiftyBeaver configuration file in the Config/secrets folder since it contains sensitive information.
 
 ## Use
 
 ```swift
-app.get("/") { request in
+drop.get("/") { request in
 
-    log.verbose("not so important")
-    log.debug("something to debug")
-    log.info("a nice information")
-    log.warning("oh no, that won’t be good")
-    log.error("ouch, an error did occur!")
+    drop.log.verbose("not so important")
+    drop.log.debug("something to debug")
+    drop.log.info("a nice information")
+    drop.log.warning("oh no, that won’t be good")
+    drop.log.error("ouch, an error did occur!")
 
     return "welcome!"
 }
 
 ```
 
-The `main.swift` in the included Example folder contains more details. Please also see the SwiftyBeaver [destination docs](http://docs.swiftybeaver.com/category/8-logging-destinations) and how to set a [custom logging format](http://docs.swiftybeaver.com/category/19-advanced-topics).
+The `Routes.swift` in the included App folder contains more details. Please also see the SwiftyBeaver [destination docs](http://docs.swiftybeaver.com/category/8-logging-destinations) and how to set a [custom logging format](http://docs.swiftybeaver.com/category/19-advanced-topics).
 <br/><br/>
 
 ## Output to Xcode 8 Console

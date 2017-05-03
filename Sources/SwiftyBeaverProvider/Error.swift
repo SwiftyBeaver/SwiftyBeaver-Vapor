@@ -3,8 +3,7 @@
 //  SwiftyBeaverProvider
 //
 //  Created by Gustavo Perdomo on 5/2/17.
-//  Copyright © 2016 Sebastian Kreutzberger
-//  Some rights reserved: http://opensource.org/licenses/MIT
+//  Copyright © 2016 Sebastian Kreutzberger. Some rights reserved.
 //
 
 import Debugging
@@ -20,14 +19,14 @@ extension SwiftyBeaverProviderError: Debuggable {
             return "At least one destination type is required."
         }
     }
-    
+
     public var identifier: String {
         switch self {
         case .missingDestinations:
             return "missingDestinations"
         }
     }
-    
+
     public var possibleCauses: [String] {
         switch self {
         case .missingDestinations:
@@ -36,13 +35,13 @@ extension SwiftyBeaverProviderError: Debuggable {
             ]
         }
     }
-    
+
     public var suggestedFixes: [String] {
         return [
             "Ensure you have properly configured the SwiftyBeaverProvider package according to the documentation"
         ]
     }
-    
+
     public var documentationLinks: [String] {
         return [
             "https://github.com/SwiftyBeaver/SwiftyBeaver-Vapor/"
