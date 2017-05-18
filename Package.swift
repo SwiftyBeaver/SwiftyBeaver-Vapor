@@ -6,7 +6,7 @@ let package = Package(
         Target(name: "SwiftyBeaverProvider-Example", dependencies: ["SwiftyBeaverProvider"])
     ],
     dependencies: [
-        .Package(url: "https://github.com/vapor/vapor.git", Version(2,0,0, prereleaseIdentifiers: ["beta"])),
+        .Package(url: "https://github.com/vapor/vapor.git", majorVersion: 2),
         .Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 1)
     ],
     exclude: [
