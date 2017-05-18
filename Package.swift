@@ -1,12 +1,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftyBeaverVapor",
+    name: "SwiftyBeaverProvider",
     targets: [
-        Target(name: "SwiftyBeaverVaporExample", dependencies: ["SwiftyBeaverVapor"])
+        Target(name: "SwiftyBeaverProvider-Example", dependencies: ["SwiftyBeaverProvider"])
     ],
     dependencies: [
-        .Package(url: "https://github.com/vapor/vapor.git", majorVersion: 1),
+        .Package(url: "https://github.com/vapor/vapor.git", majorVersion: 2),
         .Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 1)
+    ],
+    exclude: [
+        "Config",
+        "Database",
+        "Localization",
+        "Public",
+        "Resources",
     ]
 )
