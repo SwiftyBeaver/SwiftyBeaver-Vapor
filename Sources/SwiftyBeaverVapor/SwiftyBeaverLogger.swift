@@ -47,6 +47,7 @@ extension SwiftyBeaverLogger: ServiceType {
     }
 
     public static func makeService(for worker: Container) throws -> Self {
-        return .init(config: SwiftyBeaverConfig())
+        let config = try worker.make(SwiftyBeaverConfig.self)
+        return .init(config: config)
     }
 }
