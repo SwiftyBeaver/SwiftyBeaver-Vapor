@@ -7,38 +7,18 @@
 //  Some rights reserved: http://opensource.org/licenses/MIT
 //
 
-import Vapor
 import SwiftyBeaver
+import Vapor
 
-public final class SwiftyBeaverProvider: Vapor.Provider {
-
-    private let logProtocol: LogProtocol
+public final class SwiftyBeaverProvider: Provider {
+    public init() { }
     
-    // is automatically called after adding of provider to droplet
-    // sets SwiftyBeaverVapor as new logging protocol for the droplet
-    public func boot(_ drop: Droplet) {
-        drop.log = logProtocol
-    }
-    
-    /// do not use, it is just required by protocol
-    public init(config: Config) throws {
-        logProtocol = SwiftyBeaverVapor(config: config)
-    }
-    
-    /// add an array of SwiftyBeaver destination instances
-    public init(destinations: [BaseDestination]) {
-        logProtocol = SwiftyBeaverVapor(destinations: destinations)
-    }
-    
-    
-    // is automatically called directly after boot()
-    public func afterInit(_ drop: Droplet) {
+    public func register(_ services: inout Services) throws {
+        services.register(SwiftyBeaverConfig.self)
+        services.register(SwiftyBeaverLogger.self)
     }
 
-    // is automatically called directly after afterInit()
-    public func beforeRun(_: Droplet) {
-    }
-    
-    public func beforeServe(_: Droplet) {
+    public func didBoot(_ container: Container) throws -> EventLoopFuture<Void> {
+        return .done(on: container)
     }
 }
