@@ -11,8 +11,7 @@ import Foundation
 import Vapor
 import SwiftyBeaver
 
-public final class SwiftyBeaverVapor: LogProtocol {
-    
+public final class SwiftyBeaverVapor: Logger {
     public var enabled: [LogLevel]
     private var sb = SwiftyBeaver.self
     
@@ -29,7 +28,7 @@ public final class SwiftyBeaverVapor: LogProtocol {
     }
     
     // can be used once the pull request which changes the logging interface is merged in Vapor
-    public func log(_ level: LogLevel, message: String, file: String = #file, function: String = #function, line: Int = #line) {
+    public func log(_ string: String, at level: LogLevel, file: String = #file, function: String = #function, line: UInt = #line, column: UInt = #column) {
     
         if enabled.contains(level) {
             
@@ -51,8 +50,29 @@ public final class SwiftyBeaverVapor: LogProtocol {
             }
             
             // log to SwiftyBeaver
-            sb.custom(level: sbLevel, message: message, file: file, function: function, line: line)
+            sb.custom(level: sbLevel, message: string, file: file, function: function, line: Int(bitPattern: line))
         }
     }
 
+}
+
+extension SwiftyBeaverVapor: Service {}
+
+extension LogLevel {
+    public static var all: [LogLevel] {
+        return [
+            LogLevel.debug,
+            LogLevel.info,
+            LogLevel.verbose,
+            LogLevel.fatal,
+            LogLevel.error,
+            LogLevel.warning
+        ]
+    }
+}
+
+extension LogLevel: Equatable {
+    static public func == (lhs: LogLevel, rhs: LogLevel) -> Bool {
+        return lhs.description == rhs.description
+    }
 }
