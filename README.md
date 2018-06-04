@@ -1,7 +1,10 @@
 # SwiftyBeaver Logging Provider for Vapor
-[![Language Swift 3](https://img.shields.io/badge/Language-Swift%203-orange.svg)](https://swift.org) [![Vapor 1.x](https://img.shields.io/badge/Vapor-1.x-blue.svg)](http://vapor.codes/) [![SwiftyBeaver 1.x](https://img.shields.io/badge/SwiftyBeaver-1.x-blue.svg)] (https://github.com/SwiftyBeaver/SwiftyBeaver) [![Slack Status](https://slack.swiftybeaver.com/badge.svg)](https://slack.swiftybeaver.com) 
+[![Swift](https://img.shields.io/badge/Swift-4.1-orange.svg)](https://swift.org) 
+[![Vapor 3.x](https://img.shields.io/badge/Vapor-3.x-blue.svg)](http://vapor.codes/) 
+[![SwiftyBeaver 1.x](https://img.shields.io/badge/SwiftyBeaver-1.x-blue.svg)](https://github.com/SwiftyBeaver/SwiftyBeaver) 
+[![Slack](https://img.shields.io/badge/Join-Our%20Slack%20Chat-blue.svg)](https://slack.swiftybeaver.com) 
 
-Adds the powerful logging of [SwiftyBeaver](https://github.com/SwiftyBeaver/SwiftyBeaver) to [Vapor](https://github.com/vapor/vapor) for server-side Swift 3 on Linux and Mac.
+Adds the powerful logging of [SwiftyBeaver](https://github.com/SwiftyBeaver/SwiftyBeaver) to [Vapor](https://github.com/vapor/vapor) for server-side Swift on Linux and Mac.
 
 ## Installation
 
@@ -9,7 +12,7 @@ Add this to the `Package.swift` of your Vapor project:
 
 ```swift
 dependencies: [
-	.Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver-Vapor.git", majorVersion: 1),
+    .package(url: "git@github.com:SwiftyBeaver/SwiftyBeaver-Vapor.git", from: "2.0.0")),
 	//...other packages here
 ],
 ```
@@ -17,25 +20,20 @@ dependencies: [
 
 ## Setup
 
+In `configure.swift`:
 ```swift
-import Foundation
-import Vapor
-import SwiftyBeaverVapor
-import SwiftyBeaver
+/// Called before your application initializes.
+public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
+    
+    // ...
 
-// set-up SwiftyBeaver logging destinations (console, file, cloud, ...)
-// learn more at http://bit.ly/2ci4mMX
-let console = ConsoleDestination()  // log to Xcode Console in color
-let file = FileDestination()  // log to file in color
-file.logFileURL = URL(fileURLWithPath: "/tmp/VaporLogs.log") // set log file
-let sbProvider = SwiftyBeaverProvider(destinations: [console, file])
+    let loggingDestination = ConsoleDestination()
+    try services.register(SwiftyBeaverProvider(destinations: [loggingDestination]))
 
-// create Droplet & add provider
-let app = Droplet()
-app.addProvider(sbProvider)
+    config.prefer(SwiftyBeaverVapor.self, for: Logger.self)
 
-// shortcut to avoid writing app.log all the time
-let log = app.log.self
+    // ...
+}
 ```
 
 Add the SwiftyBeaver [logging destinations](http://docs.swiftybeaver.com/category/8-logging-destinations) you want to use, optionally adjust their defaults like format, color, filter or minimum log level and you are ready to log 🙌
@@ -43,21 +41,19 @@ Add the SwiftyBeaver [logging destinations](http://docs.swiftybeaver.com/categor
 
 ## Use
 
+For example, you can log requests as they come in.
 ```swift
-app.get("/") { request in
+func index(_ req: Request) throws -> Future<[Foo]> {
 
-    log.verbose("not so important")
-    log.debug("something to debug")
-    log.info("a nice information")
-    log.warning("oh no, that won’t be good")
-    log.error("ouch, an error did occur!")
+    let logger = try? req.sharedContainer.make(Logger.self)
+    logger?.log(req.description, at: .verbose, file: #file, function: #function, line: #line, column: #column)
 
-    return "welcome!"
+    return Foo.query(on: req).all()
 }
 
 ```
 
-The `main.swift` in the included Example folder contains more details. Please also see the SwiftyBeaver [destination docs](http://docs.swiftybeaver.com/category/8-logging-destinations) and how to set a [custom logging format](http://docs.swiftybeaver.com/category/19-advanced-topics).
+For more information see the SwiftyBeaver [destination docs](http://docs.swiftybeaver.com/category/8-logging-destinations) and how to set a [custom logging format](http://docs.swiftybeaver.com/category/19-advanced-topics).
 <br/><br/>
 
 ## Output to Xcode 8 Console
