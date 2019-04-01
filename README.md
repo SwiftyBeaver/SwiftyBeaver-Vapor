@@ -27,8 +27,14 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     
     // ...
 
-    let loggingDestination = ConsoleDestination()
-    try services.register(SwiftyBeaverProvider(destinations: [loggingDestination]))
+    // console logging 
+    let consoleDestination = ConsoleDestination()
+    try services.register(SwiftyBeaverProvider(destinations: [consoleDestination]))
+    
+    // OR console and cloud platform logging
+    let consoleDestination = ConsoleDestination()
+    let cloudDestination = SBPlatformDestination(appID: "xxx", appSecret: "xxxxxx", encryptionKey: "xxxxx")
+    try services.register(SwiftyBeaverProvider(destinations: [consoleDestination, cloudDestination]))
 
     config.prefer(SwiftyBeaverVapor.self, for: Logger.self)
 
