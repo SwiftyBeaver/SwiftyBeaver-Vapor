@@ -12,7 +12,7 @@ Add this to the `Package.swift` of your Vapor project:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver-Vapor.git", from: "1.1.0")),
+    .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver-Vapor.git", from: "1.1.0"),
 	//...other packages here
 ],
 ```
