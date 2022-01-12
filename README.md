@@ -20,7 +20,7 @@ targets: [
             .product(name: "SwiftyBeaverVapor", package: "SwiftyBeaver-Vapor")
 	    //...other packages here
         ])
-    ]
+]
 ```
 
 <br/>
