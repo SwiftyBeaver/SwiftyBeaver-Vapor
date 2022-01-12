@@ -11,6 +11,9 @@ let package = Package(
         .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0"))
     ],
     targets: [
-        .target(name: "SwiftyBeaverVapor", dependencies: ["Vapor", "SwiftyBeaver"])
+        .target(name: "SwiftyBeaverVapor", dependencies: [
+            .product(name: "Vapor", package: "vapor"),
+            .product(name: "SwiftyBeaver", package: "SwiftyBeaver")
+        ])
     ]
 )
