@@ -15,7 +15,14 @@ dependencies: [
     .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver-Vapor.git", from: "1.1.0"),
 	//...other packages here
 ],
+targets: [
+        .target(name: "App", dependencies: [
+            .product(name: "SwiftyBeaverVapor", package: "SwiftyBeaver-Vapor")
+	    //...other packages here
+        ])
+    ]
 ```
+
 <br/>
 
 ## Setup
